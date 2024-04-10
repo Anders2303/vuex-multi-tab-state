@@ -51,12 +51,12 @@ export default function(options?: Options) {
     // if whole state is to be replaced then do just that
     if (statesPaths.length === 0) return { ...newState };
 
-    // else clone old state
-    const merged: any = cloneObj(oldState);
+    // else take old state
+    const merged = { ...oldState };
 
     // and replace only specified paths
     statesPaths.forEach(statePath => {
-      const newValue = pick(statePath, newState);
+      const newValue = cloneObj(pick(statePath, newState));
       // remove value if it doesn't exist, overwrite otherwise
       if (typeof newValue === 'undefined') remove(statePath, merged);
       else set(statePath, newValue, merged);
